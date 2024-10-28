@@ -60,13 +60,13 @@ public class Employee {
         return id;
     }
 
-    public String toString() {
-        return "Имя: " + firstName.toString() + "\n" +
-               "Фамилия: " + lastName.toString() + "\n" +
-               "Отчество: " + secondName.toString() + "\n" +
-               "Id: "  + id + "\n" +
-               "Отдел: " + department + "\n" +
-               "Зарплата: " + salary + "\n";
+    public static String toString(Employee obj) {
+        return "Имя: " + obj.firstName.toString() + "\n" +
+               "Фамилия: " + obj.lastName.toString() + "\n" +
+               "Отчество: " + obj.secondName.toString() + "\n" +
+               "Id: "  + obj.id + "\n" +
+               "Отдел: " + obj.department + "\n" +
+               "Зарплата: " + obj.getSalary() + "\n";
     }
 
     public boolean equals(Employee comparable) {
