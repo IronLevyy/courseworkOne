@@ -4,10 +4,6 @@ public class App {
 
     public static void main(String[] args) {
         EmpoyeeBook empoyeeBook = new EmpoyeeBook();
-        empoyeeBook.newEmployee("123", "123", "123", 123.12,4);
-        empoyeeBook.newEmployee("123", "123", "123", 12223.12,4);
-        empoyeeBook.newEmployee("123", "123", "123", 123.12,5);
-        empoyeeBook.newEmployee("Олег","Калинин","Витальевич", 153452.32, 5);
         mainMenu(empoyeeBook);
     }
 
@@ -138,16 +134,6 @@ public class App {
         System.out.print("\033[H\033[J");
         mainMenu(empoyeeBook);
     }
-
-//    public static void insert(int codeName) {
-//        switch (codeName) {
-//            case 1:
-//                insertDepartment();
-//                break;
-//            default:
-//                throw new IllegalArgumentException("Неверный код ввода.");
-//        }
-//    }
 
     public static int insertDepartment() {
         Scanner sc = new Scanner(System.in);
