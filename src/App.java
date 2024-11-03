@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        EmpoyeeBook empoyeeBook = new EmpoyeeBook();
-        mainMenu(empoyeeBook);
+        EmployeeBook employeeBook = new EmployeeBook();
+        mainMenu(employeeBook);
     }
 
-    public static void mainMenu(EmpoyeeBook empoyeeBook){
+    public static void mainMenu(EmployeeBook employeeBook){
         printLine();
         System.out.printf("%1$78s\n","Добро пожаловать в программу учёта работников!");
         System.out.println("Выберите нужное действие:");
@@ -23,116 +23,121 @@ public class App {
 
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
-        actionSelection(choice, empoyeeBook);
+        actionSelection(choice, employeeBook);
     }
 
     public static void printLine(){
         System.out.println("==============================================================================================================");
     }
 
-    public static void actionSelection(int action, EmpoyeeBook empoyeeBook){
+    public static void actionSelection(int action, EmployeeBook employeeBook){
         switch(action){
             case 1:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.printAllEmployee();
-                pauseAndBack(empoyeeBook);
+                employeeBook.printAllEmployee();
+                pauseAndBack(employeeBook);
                 break;
             case 2:
                 System.out.print("\033[H\033[J");
-                System.out.printf("Траты на ЗП за месяц составляют %.0f рублей и %.0f копеек.\n", empoyeeBook.salaryPerMonth(), empoyeeBook.salaryPerMonth() % 1 * 100);
-                pauseAndBack(empoyeeBook);
+                System.out.printf("Траты на ЗП за месяц составляют %.0f рублей и %.0f копеек.\n", employeeBook.getSalaryPerMonth(), employeeBook.getSalaryPerMonth() % 1 * 100);
+                pauseAndBack(employeeBook);
                 break;
             case 3:
                 System.out.print("\033[H\033[J");
-                System.out.println(Employee.toString(empoyeeBook.findMinSalary()));
-                pauseAndBack(empoyeeBook);
+                System.out.println(employeeBook.findEmployeeWithMinSalary());
+                pauseAndBack(employeeBook);
                 break;
             case 4:
                 System.out.print("\033[H\033[J");
-                System.out.println(Employee.toString(empoyeeBook.findMaxSalary()));
-                pauseAndBack(empoyeeBook);
+                System.out.println(employeeBook.findEmployeeWithMaxSalary());
+                pauseAndBack(employeeBook);
                 break;
             case 5:
                 System.out.print("\033[H\033[J");
-                System.out.printf("Средняя ЗП равна: %.2f\n", empoyeeBook.calculateAverageSalary());
-                pauseAndBack(empoyeeBook);
+                System.out.printf("Средняя ЗП равна: %.2f\n", employeeBook.calculateAverageSalary());
+                pauseAndBack(employeeBook);
                 break;
             case 6:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.printAllNames();
-                pauseAndBack(empoyeeBook);
+                employeeBook.printAllNames();
+                pauseAndBack(employeeBook);
                 break;
             case 7:
                 System.out.print("\033[H\033[J");
-                System.out.println(Employee.toString(empoyeeBook.findMinSalaryInDepartment(insertDepartment())));
-                pauseAndBack(empoyeeBook);
+                System.out.println(employeeBook.findMinSalaryInDepartment(insertDepartment()));
+                pauseAndBack(employeeBook);
                 break;
             case 8:
                 System.out.print("\033[H\033[J");
-                System.out.println(Employee.toString(empoyeeBook.findMaxSalaryInDepartnemt(insertDepartment())));
-                pauseAndBack(empoyeeBook);
+                System.out.println(employeeBook.findMaxSalaryInDepartnemt(insertDepartment()));
+                pauseAndBack(employeeBook);
                 break;
             case 9:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.salaryIndexationInDepartment(insertDepartment(), insertPercent());
+                employeeBook.riseSalaryByDeparnt(insertDepartment(), insertPercent());
                 System.out.println("Индексация выполнена!");
-                pauseAndBack(empoyeeBook);
+                pauseAndBack(employeeBook);
                 break;
             case 10:
                 System.out.print("\033[H\033[J");
-                System.out.println("ЗП отдела в месяц равна: " + empoyeeBook.salaryPerMonthInDepartment(insertDepartment()));
-                pauseAndBack(empoyeeBook);
+                System.out.println("ЗП отдела в месяц равна: " + employeeBook.getSalaryPerMonthInDepartment(insertDepartment()));
+                pauseAndBack(employeeBook);
                 break;
             case 11:
                 System.out.print("\033[H\033[J");
-                System.out.println("Средняя ЗП отдела равна: " + empoyeeBook.calculateAverageSalaryInDepartment(insertDepartment()));
-                pauseAndBack(empoyeeBook);
+                System.out.println("Средняя ЗП отдела равна: " + employeeBook.calculateAverageSalaryInDepartment(insertDepartment()));
+                pauseAndBack(employeeBook);
                 break;
             case 12:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.printEmployeeInDepartment(insertDepartment());
-                pauseAndBack(empoyeeBook);
+                employeeBook.printEmployeeInDepartment(insertDepartment());
+                pauseAndBack(employeeBook);
                 break;
             case 13:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.findSalaryLessN(insertSalary());
-                pauseAndBack(empoyeeBook);
+                employeeBook.printSalaryLessThan(insertSalary());
+                pauseAndBack(employeeBook);
                 break;
             case 14:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.findSalaryMoreN(insertSalary());
-                pauseAndBack(empoyeeBook);
+                employeeBook.printSalaryMoreThan(insertSalary());
+                pauseAndBack(employeeBook);
                 break;
             case 15:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.newEmployee(insertFirstName(), insertLastName(), insertSecondName(), insertSalary(), insertDepartment());
-                pauseAndBack(empoyeeBook);
+                Employee newEmployee = new Employee(insertFirstName(), insertLastName(), insertSecondName(), insertSalary(), insertDepartment());
+                if (employeeBook.newEmployee(newEmployee)) {
+                    System.out.println("Сотрудник создан успешно.");
+                }else System.out.println("Создание сотрудника не удалось.");
+                pauseAndBack(employeeBook);
                 break;
             case 16:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.deleteEmployee(insertId());
-                pauseAndBack(empoyeeBook);
+                if (employeeBook.deleteEmployee(insertId())) {
+                    System.out.println("Сотрудник удалён.");
+                }else System.out.println("Удаление не выполнено.");
+                pauseAndBack(employeeBook);
                 break;
             case 17:
                 System.out.print("\033[H\033[J");
-                empoyeeBook.salaryIndexationInDepartment(insertDepartment(), insertPercent());
-                pauseAndBack(empoyeeBook);
+                employeeBook.riseSalary(insertPercent());
+                pauseAndBack(employeeBook);
                 break;
             default:
                 System.out.print("\033[H\033[J");
                 System.out.print("Неверный номер действия.\n");
-                pauseAndBack(empoyeeBook);
+                pauseAndBack(employeeBook);
                 break;
         }
     }
 
-    public static void pauseAndBack(EmpoyeeBook empoyeeBook){
+    public static void pauseAndBack(EmployeeBook employeeBook){
         Scanner sc = new Scanner(System.in);
         System.out.print("Нажмите [Enter], чтобы вернуться...\n");
         String exit;
         exit = sc.nextLine();
         System.out.print("\033[H\033[J");
-        mainMenu(empoyeeBook);
+        mainMenu(employeeBook);
     }
 
     public static int insertDepartment() {

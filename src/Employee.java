@@ -1,24 +1,27 @@
+import java.util.Objects;
+
 public class Employee {
-    private String firstName;
-    private String lastName;
-    private String secondName;
-    private int salary;
-    private int department;
-    private int id;
+    private static final int minDepartmentNumber = 1;
+    private static final int maxDepartmentNumber = 5;
     private static int count = 0;
+    private final String firstName;
+    private final String lastName;
+    private final String secondName;
+    private double salary;
+    private int department;
+    private final int id;
 
     public Employee(String firstName, String lastName, String secondName, double salary, int department) {
+        if (department < minDepartmentNumber || department > maxDepartmentNumber) {
+            throw new IllegalArgumentException("Номер отдела должен быть от 1 до 5. Текущий номер: " + department);
+        } else {
+            this.department = department;
+        }
         this.firstName =  firstName;
         this.lastName = lastName;
         this.secondName = secondName;
-        salary = salary * 100;
-        this.salary = (int) salary;
-        if (0 < department && department < 6) {
-            this.department = department;
-        } else {
-            throw new IllegalArgumentException("Номер отдела должен быть от 1 до 5.");
-        }
-        this.id = counter();
+        this.salary = salary;
+        this.id = count++;
     }
 
     public String getFirstName() {
@@ -34,7 +37,7 @@ public class Employee {
     }
 
     public double getSalary() {
-        return (double) salary / 100;
+        return salary;
     }
 
     public int getDepartment() {
@@ -46,46 +49,65 @@ public class Employee {
     }
 
     public void setSalary(double salary) {
-        salary = salary * 100;
-        this.salary = (int) salary;
+        this.salary = salary;
     }
 
     public void setDepartment(int department) {
         this.department = department;
     }
 
-    private int counter() {
-        id = count;
-        count++;
-        return id;
-    }
-
-    public static String toString(Employee obj) {
-        return "Имя: " + obj.firstName.toString() + "\n" +
-               "Фамилия: " + obj.lastName.toString() + "\n" +
-               "Отчество: " + obj.secondName.toString() + "\n" +
-               "Id: "  + obj.id + "\n" +
-               "Отдел: " + obj.department + "\n" +
-               "Зарплата: " + obj.getSalary() + "\n";
-    }
-
-    public boolean equals(Employee comparable) {
-        if (this == comparable) {
-            return true;
+    @Override
+    public String toString() {
+        if (secondName == null) {
+            return  "Имя: " + firstName + '\n' +
+                    "Фамилия: " + lastName + '\n' +
+                    "Зарплата: " + salary + "\n" +
+                    "Отдел: " + department + "\n" +
+                    "ID: " + id + "\n";
         }
-        if (this.getClass() != comparable.getClass() || comparable == null) {
-            return false;
-        }
-        return firstName.equals(comparable.firstName) && lastName.equals(comparable.lastName) && secondName.equals(comparable.secondName) && salary == comparable.salary && department == comparable.department;
+        return  "Имя: " + firstName + '\n' +
+                "Фамилия: " + lastName + '\n' +
+                "Отчество: " + secondName + '\n' +
+                "Зарплата: " + salary + "\n" +
+                "Отдел: " + department + "\n" +
+                "ID: " + id + "\n";
     }
 
+    public String printName() {
+        if (secondName == null) {
+            return "Имя: " + firstName + '\n' +
+                    "Фамилия: " + lastName + '\n';
+        }
+        return "Имя: " + firstName + '\n' +
+                "Фамилия: " + lastName + '\n' +
+                "Отчество: " + secondName + '\n';
+    }
+
+    public String printData() {
+        if (secondName == null) {
+            return "Имя: " + firstName + '\n' +
+                    "Фамилия: " + lastName + '\n' +
+                    "Зарплата: " + salary + "\n" +
+                    "ID: " + id + "\n";
+        }
+        return "Имя: " + firstName + '\n' +
+                "Фамилия: " + lastName + '\n' +
+                "Отчество: " + secondName + '\n' +
+                "Зарплата: " + salary + "\n" +
+                "ID: " + id + "\n";
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Double.compare(salary, employee.salary) == 0 && department == employee.department && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(secondName, employee.secondName);
+    }
+
+    @Override
     public int hashCode() {
-        int result = firstName == null ? 0 : firstName.hashCode();
-        result = 31 * result + lastName == null ? 0 : lastName.hashCode();
-        result = 31 * result + secondName == null ? 0 : secondName.hashCode();
-        result = 31 * result + salary;
-        result = 31 * result + department;
-
-        return result;
+        return Objects.hash(firstName, lastName, secondName, salary, department);
     }
 }
